@@ -9,9 +9,7 @@ namespace Backend.Models
 
         public string ImageUrl { get; set; }
         public User Author { get; set; }
-        public int AuthorId { get; set; }
         public VoteNook VoteNook { get; set; }
-        public int VoteNookId { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Vote> Votes { get; set; }
     }

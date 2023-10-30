@@ -7,7 +7,6 @@ namespace Backend.Models
         public string About { get; set; }
 
         public User Creator { get; set; }
-        public int CreatorId { get; set; }
         public ICollection<Post> Posts { get; set; }
     }
 }
