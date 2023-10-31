@@ -1,6 +1,6 @@
 namespace Backend.Dto
 {
-    public class UserDto
+    public class UserRegistrationDto
     {
         public int Id { get; set; }
         public string Username { get; set; }

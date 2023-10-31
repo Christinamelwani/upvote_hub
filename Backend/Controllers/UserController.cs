@@ -22,7 +22,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register([FromBody] UserDto newUser)
+        public IActionResult Register([FromBody] UserRegistrationDto newUser)
         {
             if (newUser == null)
                 return BadRequest("Please enter a valid email, password, and avatarlink");
@@ -54,7 +54,7 @@ namespace Backend.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserDto credentials)
+        public IActionResult Login([FromBody] UserLoginDto credentials)
         {
             if (credentials == null)
                 return BadRequest("Please enter valid credentials");

@@ -29,6 +29,17 @@ builder.Services
         };
     });
 
+builder.Services.AddCors(
+    p =>
+        p.AddPolicy(
+            "corsapp",
+            builder =>
+            {
+                builder.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader();
+            }
+        )
+);
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -43,6 +54,8 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 var app = builder.Build();
+
+app.UseCors("corsapp");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
