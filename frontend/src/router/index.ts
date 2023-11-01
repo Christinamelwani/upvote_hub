@@ -21,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "UserPage",
     component: () => import("../views/UserView.vue"),
   },
+  {
+    path: "/votenooks",
+    name: "VoteNookPage",
+    component: () => import("../views/VoteNookView.vue"),
+  },
 ];
 
 const router = createRouter({

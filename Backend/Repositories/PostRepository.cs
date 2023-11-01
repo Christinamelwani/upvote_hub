@@ -21,7 +21,7 @@ namespace Backend.Repositories
 
         public ICollection<Post> SearchForPosts(string query)
         {
-            return _context.Posts.Where(post => post.Title.Contains(query) || post.Text.Contains(query)).ToList();
+            return _context.Posts.Where(post => post.Title.Contains(query) || post.Text.Contains(query)).Include("Author").ToList();
         }
 
         public Post GetPostByTitle(string title)

@@ -1,6 +1,7 @@
 using Backend.Interfaces;
 using Backend.Models;
 using Backend.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repositories
 {
@@ -23,6 +24,11 @@ namespace Backend.Repositories
         {
             _context.Add(voteNook);
             return Save();
+        }
+
+        public ICollection<VoteNook> GetVoteNooks()
+        {
+            return _context.VoteNooks.Include("Creator").ToList();
         }
 
         public bool Save()
