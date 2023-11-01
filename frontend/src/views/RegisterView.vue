@@ -47,7 +47,11 @@ export default defineComponent({
 
         this.$router.push("/");
       } catch (error: any) {
-        Swal.fire(error.response.data);
+        if (error.response) {
+          Swal.fire(error.response.data);
+        } else {
+          Swal.fire(error.message);
+        }
       }
     },
   },
