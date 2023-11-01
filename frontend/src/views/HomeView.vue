@@ -7,19 +7,40 @@ export default defineComponent({
   components: {
     PostCard,
   },
-  async created() {
-    const response = await axios.get("http://localhost:5066/post");
-    this.posts = response.data;
+  created() {
+    this.fetchArticle();
+  },
+  methods: {
+    async fetchArticle() {
+      try {
+        let query = this.$route.query.query;
+        let response;
+        if (query) {
+          response = await axios.get(
+            `http://localhost:5066/post/search?query=${query}`
+          );
+        } else {
+          response = await axios.get("http://localhost:5066/post");
+        }
+
+        this.posts = response?.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   data() {
     return {
       posts: [],
     };
   },
+  watch: {
+    "$route.query.query": "fetchArticle",
+  },
 });
 </script>
 <template>
-  <div class="w-full h-full p-4 bg-gray-900">
+  <div class="w-full h-full min-h-screen p-4 bg-gray-900">
     <div class="w-screen max-w-xl mx-auto space-y-4">
       <PostCard
         v-for="post in posts"
