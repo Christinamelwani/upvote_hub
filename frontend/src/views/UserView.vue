@@ -8,7 +8,9 @@ export default defineComponent({
     PostCard,
   },
   async created() {
-    const response = await axios.get("http://localhost:5066/post");
+    const response = await axios.get(
+      `http://localhost:5066/user/${this.$route.params.id}/posts`
+    );
     this.posts = response.data;
   },
   data() {
@@ -19,7 +21,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="w-full h-full p-4 bg-gray-900">
+  <div class="w-full h-full min-h-screen p-4 bg-gray-900">
     <div class="w-screen max-w-xl mx-auto space-y-4">
       <PostCard
         v-for="post in posts"

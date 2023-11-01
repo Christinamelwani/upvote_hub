@@ -16,9 +16,7 @@ namespace Backend.Repositories
 
         public ICollection<Post> GetPosts()
         {
-            return _context.Posts
-                .OrderByDescending(p => p.Votes.Sum(v => v.Up ? 1 : -1))
-                .ToList();
+            return _context.Posts.Include("Author").OrderByDescending(p => p.Votes.Sum(v => v.Up ? 1 : -1)).ToList();
         }
 
         public Post GetPostByTitle(string title)

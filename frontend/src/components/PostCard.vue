@@ -6,6 +6,11 @@ interface Post {
   imageUrl: string;
   text: string;
   link: string;
+  author: {
+    username: string;
+    id: number;
+  };
+  Votes: [];
 }
 
 export default defineComponent({
@@ -30,13 +35,28 @@ export default defineComponent({
         alt="Post Image"
       />
     </div>
-    <div class="mb-2">
-      <a :href="post.link" class="text-blue-500 hover:underline break-all">{{
-        post.link
-      }}</a>
+    <div class="mb-2 flex flex-row justify-between items-center text-blue-500">
+      <a :href="post.link" class="hover:underline break-all">{{ post.link }}</a>
+      <p
+        @click="$router.push(`/users/${post.author.id}`)"
+        class="text-sm font-semibold cursor-pointer"
+      >
+        {{ post.author.username }}
+      </p>
     </div>
     <p class="text-gray-700 text-sm line-clamp-3">
       {{ post?.text }}
     </p>
+    <div class="mt-4 flex items-center">
+      <button class="flex items-center space-x-2 text-green-500">
+        <i class="fas fa-thumbs-up"></i>
+        <span>Upvote</span>
+      </button>
+      <p class="text-gray-600">{{ post.Votes?.length }}</p>
+      <button class="flex items-center space-x-2 text-red-500 ml-4">
+        <i class="fas fa-thumbs-down"></i>
+        <span>Downvote</span>
+      </button>
+    </div>
   </div>
 </template>

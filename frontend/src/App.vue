@@ -12,11 +12,11 @@
         />
       </div>
       <div class="space-x-4">
-        <router-link to="/" class="text-white hover:underline"
-          >Home</router-link
-        >
         <router-link to="/upnooks" class="text-white hover:underline"
           >UpNooks</router-link
+        >
+        <router-link to="/login" class="text-white hover:underline"
+          >Login</router-link
         >
       </div>
     </div>
