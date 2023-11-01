@@ -21,6 +21,11 @@ namespace Backend.Repositories
                 .ToList();
         }
 
+        public Post GetPostByTitle(string title)
+        {
+            return _context.Posts.Where(p => p.Title == title).FirstOrDefault();
+        }
+
         public bool CreatePost(Post post)
         {
             _context.Add(post);

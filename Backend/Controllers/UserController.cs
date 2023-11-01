@@ -59,10 +59,7 @@ namespace Backend.Controllers
             if (credentials == null)
                 return BadRequest("Please enter valid credentials");
 
-            var matchingUser = _userRepository
-                .GetUsers()
-                .Where(u => u.Email == credentials.Email)
-                .FirstOrDefault();
+            var matchingUser = _userRepository.GetUserByEmail(credentials.Email);
 
             if (matchingUser == null)
             {
@@ -82,6 +79,23 @@ namespace Backend.Controllers
             return Ok(new { Token = token });
         }
 
+        [HttpGet("{userId}/posts")]
+        public IActionResult GetPostsByUser(int userId)
+        {
+            if (_userRepository.GetUser(userId) == null)
+            {
+                return NotFound();
+            }
+
+            var posts = _userRepository.GetPostsByUser(userId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(posts);
+        }
+
+
         private string GenerateJwtToken(string email)
         {
             var secretKey = "YourSecretKeyHereYourSecretKeyHereYourSecretKeyHere";
@@ -97,7 +111,7 @@ namespace Backend.Controllers
                 issuer: "your-issuer",
                 audience: "your-audience",
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(1), // Set the expiration time as needed
+                expires: DateTime.UtcNow.AddHours(24),
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
             );
 

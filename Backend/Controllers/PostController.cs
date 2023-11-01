@@ -32,11 +32,13 @@ namespace Backend.Controllers
             // Move this to middleware soon
             var identity = User.Identity as ClaimsIdentity;
             var claims = identity.Claims.ToDictionary(c => c.Type, c => c.Value);
-
             string userEmail = claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-            var author = _userRepository.GetUsers().Where(u => u.Email == userEmail).FirstOrDefault();
 
+            var author = _userRepository.GetUserByEmail(userEmail);
             var voteNook = _voteNookRepository.GetVoteNook(newPost.VoteNookId);
+
+            if (_postRepository.GetPostByTitle(newPost.Title) != null)
+                return StatusCode(422, "Title already taken!");
 
             Post post = new Post
             {
@@ -47,8 +49,6 @@ namespace Backend.Controllers
                 Author = author,
                 VoteNook = voteNook,
             };
-
-            // Check if title is already taken
 
             if (!_postRepository.CreatePost(post))
                 return StatusCode(500, "Failed to save!");

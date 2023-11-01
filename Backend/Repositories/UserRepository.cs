@@ -18,6 +18,19 @@ namespace Backend.Repositories
             return _context.Users.ToList();
         }
 
+        public User GetUser(int id)
+        {
+            return _context.Users.Where(u => u.Id == id).FirstOrDefault();
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _context.Users.Where(u => u.Email == email).FirstOrDefault();
+        }
+        public ICollection<Post> GetPostsByUser(int userId)
+        {
+            return _context.Posts.Where(p => p.Author.Id == userId).ToList();
+        }
         public bool CreateUser(User user)
         {
             _context.Add(user);
