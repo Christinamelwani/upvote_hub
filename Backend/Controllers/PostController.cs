@@ -66,5 +66,16 @@ namespace Backend.Controllers
 
             return Ok(posts);
         }
+
+        [HttpGet("search")]
+        public IActionResult GetPosts([FromQuery] string query)
+        {
+            var posts = _postRepository.SearchForPosts(query);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(posts);
+        }
     }
 }
