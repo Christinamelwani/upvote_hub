@@ -55,5 +55,16 @@ namespace Backend.Controllers
 
             return StatusCode(201, post);
         }
+
+        [HttpGet]
+        public IActionResult GetPosts()
+        {
+            var posts = _postRepository.GetPosts();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(posts);
+        }
     }
 }
