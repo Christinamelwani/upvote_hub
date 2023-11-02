@@ -30,7 +30,7 @@ namespace Backend.Controllers
         public IActionResult CreatePost([FromBody] PostDto newPost)
         {
             // Move this to middleware soon
-            var identity = User.Identity as ClaimsIdentity;
+            ClaimsIdentity identity = User.Identity as ClaimsIdentity;
             var claims = identity.Claims.ToDictionary(c => c.Type, c => c.Value);
             string userEmail = claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
 

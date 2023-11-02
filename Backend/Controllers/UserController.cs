@@ -111,6 +111,20 @@ namespace Backend.Controllers
             return Ok(comments);
         }
 
+        [Authorize]
+        [HttpGet]
+
+        public IActionResult GetUserData()
+        {
+            ClaimsIdentity identity = User.Identity as ClaimsIdentity;
+            var claims = identity.Claims.ToDictionary(c => c.Type, c => c.Value);
+            string userEmail = claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+
+            var author = _userRepository.GetUserByEmail(userEmail);
+
+            return Ok(author);
+        }
+
         private string GenerateJwtToken(string email)
         {
             var secretKey = "YourSecretKeyHereYourSecretKeyHereYourSecretKeyHere";
