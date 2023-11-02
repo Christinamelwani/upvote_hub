@@ -8,6 +8,7 @@ namespace Backend.Interfaces
         User GetUser(int id);
         User GetUserByEmail(string email);
         ICollection<Post> GetPostsByUser(int userId);
+        ICollection<Comment> GetCommentsByUser(int userId);
         bool CreateUser(User user);
         bool Save();
     }

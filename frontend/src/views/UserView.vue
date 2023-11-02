@@ -4,20 +4,6 @@ import PostCard from "@/components/PostCard.vue";
 import { mapState, mapActions } from "pinia";
 import { usePostStore } from "../stores/postStore";
 
-interface Post {
-  id: number;
-  title: string;
-  imageUrl: string;
-  text: string;
-  link: string;
-  author: {
-    avatarUrl: string;
-    username: string;
-    id: number;
-  };
-  Votes: [];
-}
-
 export default defineComponent({
   components: {
     PostCard,

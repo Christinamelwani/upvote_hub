@@ -1,6 +1,7 @@
 using Backend.Interfaces;
 using Backend.Models;
 using Backend.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Repositories
 {
@@ -30,6 +31,10 @@ namespace Backend.Repositories
         public ICollection<Post> GetPostsByUser(int userId)
         {
             return _context.Posts.Where(p => p.Author.Id == userId).ToList();
+        }
+        public ICollection<Comment> GetCommentsByUser(int userId)
+        {
+            return _context.Comments.Where(p => p.Author.Id == userId).Include("Post").ToList();
         }
         public bool CreateUser(User user)
         {

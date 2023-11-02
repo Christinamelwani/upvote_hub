@@ -48,6 +48,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IVoteNookRepository, VoteNookRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

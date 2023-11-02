@@ -95,6 +95,21 @@ namespace Backend.Controllers
             return Ok(posts);
         }
 
+        [HttpGet("{userId}/comments")]
+        public IActionResult GetCommentsByUser(int userId)
+        {
+            if (_userRepository.GetUser(userId) == null)
+            {
+                return NotFound();
+            }
+
+            var comments = _userRepository.GetCommentsByUser(userId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(comments);
+        }
 
         private string GenerateJwtToken(string email)
         {

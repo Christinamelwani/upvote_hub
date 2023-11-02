@@ -19,6 +19,11 @@ namespace Backend.Repositories
             return _context.Posts.Include("Author").OrderByDescending(p => p.Votes.Sum(v => v.Up ? 1 : -1)).ToList();
         }
 
+        public Post GetPost(int id)
+        {
+            return _context.Posts.Where(p => p.Id == id).FirstOrDefault();
+        }
+
         public ICollection<Post> SearchForPosts(string query)
         {
             return _context.Posts.Where(post => post.Title.Contains(query) || post.Text.Contains(query)).Include("Author").ToList();
