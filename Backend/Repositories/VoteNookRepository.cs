@@ -21,7 +21,7 @@ namespace Backend.Repositories
 
         public ICollection<Post> GetPostsInVoteNook(int id)
         {
-            return _context.Posts.Where(p => p.VoteNook.Id == id).ToList();
+            return _context.Posts.Where(p => p.VoteNook.Id == id).Include("Author").ToList();
         }
 
         public bool CreateVoteNook(VoteNook voteNook)

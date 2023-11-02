@@ -46,5 +46,16 @@ export const usePostStore = defineStore("post", {
         console.log(err);
       }
     },
+
+    async fetchPostsInVoteNook(voteNookId: string | string[]) {
+      try {
+        const response = await axios.get(
+          `http://localhost:5066/votenook/${voteNookId}/posts`
+        );
+        this.posts = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 });

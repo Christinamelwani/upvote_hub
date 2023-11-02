@@ -23,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/votenooks",
+    name: "VoteNooksPage",
+    component: () => import("../views/VoteNooksView.vue"),
+  },
+  {
+    path: "/votenooks/:id",
     name: "VoteNookPage",
     component: () => import("../views/VoteNookView.vue"),
   },
