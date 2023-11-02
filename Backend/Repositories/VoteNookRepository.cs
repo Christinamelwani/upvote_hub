@@ -19,6 +19,10 @@ namespace Backend.Repositories
             return _context.VoteNooks.Where(v => v.Id == id).FirstOrDefault();
         }
 
+        public ICollection<Post> GetPostsInVoteNook(int id)
+        {
+            return _context.Posts.Where(p => p.VoteNook.Id == id).ToList();
+        }
 
         public bool CreateVoteNook(VoteNook voteNook)
         {

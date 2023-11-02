@@ -78,7 +78,7 @@ export default defineComponent({
       <div v-else-if="activeTab === 'comments'">
         <CommentCard
           v-for="comment in comments"
-          :key="comment"
+          :key="comment.id"
           :comment="comment"
           class="bg-white rounded shadow p-4"
         />

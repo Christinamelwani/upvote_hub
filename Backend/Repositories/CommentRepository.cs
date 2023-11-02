@@ -25,6 +25,7 @@ namespace Backend.Repositories
             _context.Add(comment);
             return Save();
         }
+
         public bool Save()
         {
             return _context.SaveChanges() > 0;

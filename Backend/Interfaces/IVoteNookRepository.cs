@@ -6,6 +6,7 @@ namespace Backend.Interfaces
     {
         ICollection<VoteNook> GetVoteNooks();
         VoteNook GetVoteNook(int id);
+        ICollection<Post> GetPostsInVoteNook(int id);
         bool CreateVoteNook(VoteNook voteNook);
         bool Save();
     }

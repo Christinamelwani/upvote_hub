@@ -31,5 +31,21 @@ namespace Backend.Controllers
 
             return Ok(voteNooks);
         }
+
+        [HttpGet("{voteNookId}/posts")]
+        public IActionResult GetPostsInVoteNook(int voteNookId)
+        {
+            if (_voteNookRepository.GetVoteNook(voteNookId) == null)
+            {
+                return NotFound();
+            }
+
+            var posts = _voteNookRepository.GetPostsInVoteNook(voteNookId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(posts);
+        }
     }
 }
