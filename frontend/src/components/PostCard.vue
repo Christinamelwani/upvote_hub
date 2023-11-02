@@ -15,11 +15,15 @@ export default defineComponent({
 <template>
   <div class="bg-white rounded-lg shadow-md p-4 m-4">
     <div class="mb-4">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-2">
+      <h2
+        @click="$router.push(`/posts/${post.id}`)"
+        class="text-2xl cursor-pointer font-semibold text-gray-800 mb-2"
+      >
         {{ post.title }}
       </h2>
       <img
-        class="w-full h-auto rounded-md"
+        @click="$router.push(`/posts/${post.id}`)"
+        class="w-full cursor-pointer h-auto rounded-md"
         :src="post.imageUrl"
         alt="Post Image"
       />

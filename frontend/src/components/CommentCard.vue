@@ -14,7 +14,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-md p-4 m-4">
+  <div
+    @click="$router.push(`/posts/${comment.post.id}`)"
+    class="bg-white cursor-pointer rounded-lg shadow-md p-4 m-4"
+  >
     <div class="mb-4">
       <div class="flex items-center space-x-5">
         <img :src="comment.author.avatarUrl" class="w-12 h-12 rounded-full" />

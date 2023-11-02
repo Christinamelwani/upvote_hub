@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-
+import { Comment } from "@/stores/commentStore";
 export interface Post {
   id: number;
   title: string;
@@ -13,10 +13,11 @@ export interface Post {
     id: number;
   };
   Votes: [];
+  comments: Array<Comment>;
 }
 
 export const usePostStore = defineStore("post", {
-  state: () => ({ posts: [] as Array<Post> }),
+  state: () => ({ posts: [] as Array<Post>, activePost: {} as Post }),
   getters: {},
   actions: {
     async fetchPosts(query: string) {
@@ -42,6 +43,17 @@ export const usePostStore = defineStore("post", {
           `http://localhost:5066/user/${userId}/posts`
         );
         this.posts = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async fetchActivePost(postId: string | string[]) {
+      try {
+        const response = await axios.get(
+          `http://localhost:5066/post/${postId}`
+        );
+        this.activePost = response.data;
       } catch (err) {
         console.log(err);
       }

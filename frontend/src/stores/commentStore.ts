@@ -10,6 +10,7 @@ export interface Comment {
     id: number;
   };
   post: {
+    id: number;
     title: string;
   };
 }

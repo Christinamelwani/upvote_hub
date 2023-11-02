@@ -21,7 +21,7 @@ namespace Backend.Repositories
 
         public Post GetPost(int id)
         {
-            return _context.Posts.Where(p => p.Id == id).FirstOrDefault();
+            return _context.Posts.Where(p => p.Id == id).Include("Comments").Include("Author").FirstOrDefault();
         }
 
         public ICollection<Post> SearchForPosts(string query)

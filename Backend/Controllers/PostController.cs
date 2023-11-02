@@ -67,6 +67,20 @@ namespace Backend.Controllers
             return Ok(posts);
         }
 
+        [HttpGet("{postId}")]
+        public IActionResult GetPost(int postId)
+        {
+            var post = _postRepository.GetPost(postId);
+
+            if (post == null)
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(post);
+        }
+
         [HttpGet("search")]
         public IActionResult GetPosts([FromQuery] string query)
         {
