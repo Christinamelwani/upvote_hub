@@ -36,7 +36,7 @@ export default {
                   placeholder="Email"
                 />
               </div>
-              <div v-if="submitText === 'Register'">
+              <div v-if="submitText == 'Register'">
                 <input
                   v-model="username"
                   type="text"
@@ -68,6 +68,18 @@ export default {
                   placeholder="Password"
                   class="border border-[1px] border-[rgba(0,0,0,.1)] rounded-lg bg-[#fcfcfb] block w-full p-2.5 placeholder-[#a5a4a4]"
                 />
+              </div>
+              <div v-if="submitText == 'Register'">
+                Already have an account?
+                <router-link to="/login" class="text-blue-500"
+                  >Login</router-link
+                >
+              </div>
+              <div v-else>
+                No account yet?
+                <router-link class="text-blue-500" to="/register"
+                  >Register</router-link
+                >
               </div>
               <button
                 @click.prevent="
