@@ -1,25 +1,30 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import PostCard from "@/components/PostCard.vue";
+import CommentCard from "@/components/CommentCard.vue";
 import { mapState, mapActions } from "pinia";
 import { usePostStore } from "../stores/postStore";
+import { useCommentStore } from "../stores/commentStore";
 
 export default defineComponent({
   components: {
     PostCard,
+    CommentCard,
   },
   computed: {
     ...mapState(usePostStore, ["posts"]),
+    ...mapState(useCommentStore, ["comments"]),
   },
   methods: {
     ...mapActions(usePostStore, ["fetchPostsByUser"]),
+    ...mapActions(useCommentStore, ["fetchCommentsByUser"]),
   },
   async created() {
     this.fetchPostsByUser(this.$route.params.id);
+    this.fetchCommentsByUser(this.$route.params.id);
   },
   data() {
     return {
-      comments: [],
       activeTab: "posts",
     };
   },

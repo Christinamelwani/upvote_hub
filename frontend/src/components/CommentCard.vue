@@ -1,17 +1,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-
-interface Comment {
-  id: number;
-  title: string;
-  text: string;
-  author: {
-    avatarUrl: string;
-    username: string;
-    id: number;
-  };
-  Votes: [];
-}
+import { Comment } from "@/stores/commentStore";
 
 export default defineComponent({
   name: "CommentCard",
@@ -23,14 +12,21 @@ export default defineComponent({
   },
 });
 </script>
+
 <template>
   <div class="bg-white rounded-lg shadow-md p-4 m-4">
     <div class="mb-4">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-2">
-        {{ comment?.title }}
-      </h2>
-      <p class="text-gray-700 text-sm line-clamp-3">
+      <div class="flex items-center space-x-5">
+        <img :src="comment.author.avatarUrl" class="w-12 h-12 rounded-full" />
+        <h2 class="text-xl text-gray-800 mb-2">
+          {{ comment?.author.username }}:
+        </h2>
+      </div>
+      <h2 class="text-xl text-gray-800 mb-2">
         {{ comment?.text }}
+      </h2>
+      <p class="text-gray-700 text-sm font-semibold line-clamp-3">
+        {{ comment?.post.title }}
       </p>
     </div>
   </div>

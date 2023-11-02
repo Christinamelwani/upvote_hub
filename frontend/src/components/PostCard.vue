@@ -1,19 +1,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-
-interface Post {
-  id: number;
-  title: string;
-  imageUrl: string;
-  text: string;
-  link: string;
-  author: {
-    avatarUrl: string;
-    username: string;
-    id: number;
-  };
-  Votes: [];
-}
+import { Post } from "@/stores/postStore";
 
 export default defineComponent({
   name: "PostCard",

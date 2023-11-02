@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-interface Post {
+export interface Post {
   id: number;
   title: string;
   imageUrl: string;
