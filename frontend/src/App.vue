@@ -27,7 +27,7 @@ export default {
       </form>
       <div class="space-x-4">
         <router-link to="/votenooks" class="text-white hover:underline"
-          >UpNooks</router-link
+          >VoteNooks</router-link
         >
         <router-link to="/login" class="text-white hover:underline"
           >Login</router-link

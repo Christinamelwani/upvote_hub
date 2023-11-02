@@ -1,5 +1,6 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+
 interface Post {
   id: number;
   title: string;
@@ -18,7 +19,7 @@ export default defineComponent({
   name: "PostCard",
   props: {
     post: {
-      type: Object as () => Post,
+      type: Object as PropType<Post>,
       required: true,
     },
   },
@@ -28,11 +29,11 @@ export default defineComponent({
   <div class="bg-white rounded-lg shadow-md p-4 m-4">
     <div class="mb-4">
       <h2 class="text-2xl font-semibold text-gray-800 mb-2">
-        {{ post?.title }}
+        {{ post.title }}
       </h2>
       <img
         class="w-full h-auto rounded-md"
-        :src="post?.imageUrl"
+        :src="post.imageUrl"
         alt="Post Image"
       />
     </div>
@@ -45,9 +46,7 @@ export default defineComponent({
         {{ post.author.username }}
       </p>
     </div>
-    <p class="text-gray-700 text-sm line-clamp-3">
-      {{ post?.text }}
-    </p>
+    <p class="text-gray-700 text-sm line-clamp-3">{{ post.text }}</p>
     <div class="mt-4 flex items-center">
       <button class="flex items-center space-x-2 text-green-500">
         <i class="fas fa-thumbs-up"></i>

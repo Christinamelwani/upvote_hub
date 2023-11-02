@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import PostCard from "@/components/PostCard.vue";
-import axios from "axios";
-import CommentCard from "@/components/CommentCard.vue";
+import { mapState, mapActions } from "pinia";
+import { usePostStore } from "../stores/postStore";
 
 interface Post {
   id: number;
@@ -21,17 +21,18 @@ interface Post {
 export default defineComponent({
   components: {
     PostCard,
-    CommentCard,
+  },
+  computed: {
+    ...mapState(usePostStore, ["posts"]),
+  },
+  methods: {
+    ...mapActions(usePostStore, ["fetchPostsByUser"]),
   },
   async created() {
-    const response = await axios.get(
-      `http://localhost:5066/user/${this.$route.params.id}/posts`
-    );
-    this.posts = response.data;
+    this.fetchPostsByUser(this.$route.params.id);
   },
   data() {
     return {
-      posts: [] as Array<Post>,
       comments: [],
       activeTab: "posts",
     };

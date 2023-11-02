@@ -1,5 +1,6 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+
 interface Comment {
   id: number;
   title: string;
@@ -16,7 +17,7 @@ export default defineComponent({
   name: "CommentCard",
   props: {
     comment: {
-      type: Object as () => Comment,
+      type: Object as PropType<Comment>,
       required: true,
     },
   },

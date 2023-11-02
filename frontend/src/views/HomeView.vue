@@ -1,41 +1,26 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import PostCard from "@/components/PostCard.vue";
-import axios from "axios";
+import { mapState, mapActions } from "pinia";
+import { usePostStore } from "../stores/postStore";
 
 export default defineComponent({
   components: {
     PostCard,
   },
-  created() {
-    this.fetchArticle();
+  computed: {
+    ...mapState(usePostStore, ["posts"]),
   },
   methods: {
-    async fetchArticle() {
-      try {
-        let query = this.$route.query.query;
-        let response;
-        if (query) {
-          response = await axios.get(
-            `http://localhost:5066/post/search?query=${query}`
-          );
-        } else {
-          response = await axios.get("http://localhost:5066/post");
-        }
-
-        this.posts = response?.data;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
-  data() {
-    return {
-      posts: [],
-    };
+    ...mapActions(usePostStore, ["fetchPosts"]),
   },
   watch: {
-    "$route.query.query": "fetchArticle",
+    "$route.query.query": {
+      handler(newValue, oldValue) {
+        this.fetchPosts(newValue);
+      },
+      immediate: true,
+    },
   },
 });
 </script>
@@ -44,7 +29,7 @@ export default defineComponent({
     <div class="w-screen max-w-xl mx-auto space-y-4">
       <PostCard
         v-for="post in posts"
-        :key="post"
+        :key="post.id"
         :post="post"
         class="bg-white rounded shadow p-4"
       />
