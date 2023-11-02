@@ -38,7 +38,10 @@ namespace Backend.Controller
                 return NotFound("Post not found");
 
             if (_voteRepository.VoteExists(user.Id, post.Id))
-                return StatusCode(422, "User already voted");
+            {
+                var existingVote = _voteRepository.GetVoteByUserAndPost(user.Id, post.Id);
+                _voteRepository.DeleteVote(existingVote);
+            }
 
             Vote vote = new Vote
             {

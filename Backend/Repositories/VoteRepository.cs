@@ -28,6 +28,10 @@ namespace Backend.Repositories
             return _context.Votes.Any(v => v.User.Id == userId && v.Post.Id == postId);
         }
 
+        public Vote GetVoteByUserAndPost(int userId, int postId)
+        {
+            return _context.Votes.Where(v => v.User.Id == userId && v.Post.Id == postId).FirstOrDefault();
+        }
         public bool DeleteVote(Vote vote)
         {
             _context.Remove(vote);

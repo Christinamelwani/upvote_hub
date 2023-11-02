@@ -30,7 +30,7 @@ namespace Backend.Repositories
         }
         public ICollection<Post> GetPostsByUser(int userId)
         {
-            return _context.Posts.Where(p => p.Author.Id == userId).ToList();
+            return _context.Posts.Where(p => p.Author.Id == userId).Include("Votes").ToList();
         }
         public ICollection<Comment> GetCommentsByUser(int userId)
         {

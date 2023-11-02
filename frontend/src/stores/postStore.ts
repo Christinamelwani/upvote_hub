@@ -12,8 +12,18 @@ export interface Post {
     username: string;
     id: number;
   };
-  Votes: [];
+  votes: [];
   comments: Array<Comment>;
+}
+
+export interface Vote {
+  id: number;
+  up: boolean;
+  user: {
+    avatarUrl: string;
+    username: string;
+    id: number;
+  };
 }
 
 export const usePostStore = defineStore("post", {
@@ -65,6 +75,30 @@ export const usePostStore = defineStore("post", {
           `http://localhost:5066/votenook/${voteNookId}/posts`
         );
         this.posts = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async voteOnPost(postId: number, up: boolean) {
+      try {
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+          console.log("You must be logged in to upvote this post!");
+        }
+
+        const response = await axios.post(
+          `http://localhost:5066/Vote`,
+          {
+            postId,
+            up: up,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       } catch (err) {
         console.log(err);
       }

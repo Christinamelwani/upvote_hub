@@ -16,17 +16,17 @@ namespace Backend.Repositories
 
         public ICollection<Post> GetPosts()
         {
-            return _context.Posts.Include("Author").OrderByDescending(p => p.Votes.Sum(v => v.Up ? 1 : -1)).ToList();
+            return _context.Posts.Include("Author").Include("Votes").OrderByDescending(p => p.Votes.Sum(v => v.Up ? 1 : -1)).ToList();
         }
 
         public Post GetPost(int id)
         {
-            return _context.Posts.Where(p => p.Id == id).Include("Comments").Include("Author").FirstOrDefault();
+            return _context.Posts.Where(p => p.Id == id).Include("Comments").Include("Votes").Include("Author").FirstOrDefault();
         }
 
         public ICollection<Post> SearchForPosts(string query)
         {
-            return _context.Posts.Where(post => post.Title.Contains(query) || post.Text.Contains(query)).Include("Author").ToList();
+            return _context.Posts.Where(post => post.Title.Contains(query) || post.Text.Contains(query)).Include("Author").Include("Votes").ToList();
         }
 
         public Post GetPostByTitle(string title)
