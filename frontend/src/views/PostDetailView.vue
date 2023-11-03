@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { usePostStore } from "@/stores/postStore";
+import { useCommentStore } from "@/stores/commentStore";
 import { mapState, mapActions } from "pinia";
 
 export default defineComponent({
@@ -11,6 +12,7 @@ export default defineComponent({
   data() {
     return {
       voteCount: 0,
+      commentText: "",
     };
   },
   methods: {
@@ -19,17 +21,35 @@ export default defineComponent({
       "voteOnPost",
       "getVoteCount",
     ]),
+    ...mapActions(useCommentStore, ["createComment"]),
     async vote(up: boolean) {
-      await this.voteOnPost(this.activePost.id, up);
-      this.voteCount = await this.getVoteCount(this.activePost.id);
+      try {
+        await this.voteOnPost(this.activePost.id, up);
+        this.voteCount = await this.getVoteCount(this.activePost.id);
+      } catch (error) {
+        console.error("An error occurred while voting:", error);
+      }
+    },
+    async comment() {
+      try {
+        this.createComment(this.activePost.id, this.commentText);
+        this.commentText = "";
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
   async created() {
-    this.fetchActivePost(this.$route.params.id);
-    this.voteCount = await this.getVoteCount(+this.$route.params.id);
+    try {
+      this.fetchActivePost(this.$route.params.id);
+      this.voteCount = await this.getVoteCount(+this.$route.params.id);
+    } catch (error) {
+      console.error("An error occurred while fetching the post:", error);
+    }
   },
 });
 </script>
+
 <template>
   <div class="flex flex-col items-center">
     <div class="bg-white rounded-lg w-4/5 p-4 m-4">
@@ -51,7 +71,7 @@ export default defineComponent({
           @click="$router.push(`/users/${activePost.author?.id}`)"
           class="text-sm font-semibold cursor-pointer"
         >
-          By: {{ activePost.author?.username }}
+          By: {{ activePost.author?.username || "Unknown" }}
         </p>
       </div>
       <p class="text-gray-700 text-base">{{ activePost.text }}</p>
@@ -82,13 +102,13 @@ export default defineComponent({
           >
             <div class="flex items-start space-x-4">
               <img
-                @click="$router.push(`/users/${comment.author.id}`)"
-                :src="comment.author.avatarUrl"
+                @click="$router.push(`/users/${comment.author?.id}`)"
+                :src="comment.author?.avatarUrl"
                 class="w-12 h-12 rounded-full cursor-pointer"
               />
               <div>
                 <p class="text-gray-800 font-semibold text-lg">
-                  {{ comment.author.username }}:
+                  {{ comment.author?.username || "Unknown" }}:
                 </p>
                 <p class="text-gray-700 text-base">{{ comment.text }}</p>
               </div>
@@ -96,14 +116,15 @@ export default defineComponent({
           </li>
         </ul>
       </div>
-      <!-- Comment Textbox -->
-      <form class="mt-4">
+      <form class="mt-4" @submit.prevent="comment">
         <textarea
+          v-model="commentText"
           class="w-full rounded-md p-2 border border-gray-300"
           rows="4"
           placeholder="Add a comment..."
         ></textarea>
         <button
+          @click.prevent="comment"
           class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
           type="submit"
         >

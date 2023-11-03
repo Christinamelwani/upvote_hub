@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { usePostStore } from "./postStore";
 
 export interface Comment {
   id: number;
@@ -27,6 +28,32 @@ export const useCommentStore = defineStore("comment", {
         this.comments = response.data;
       } catch (err) {
         console.error(err);
+      }
+    },
+
+    async createComment(postId: number, text: string) {
+      const token = localStorage.getItem("access_token");
+      if (!token) {
+        console.log("You must be logged in to comment on this post!");
+        return; // Exit early if there's no token
+      }
+
+      try {
+        const response = await axios.post(
+          `http://localhost:5066/Comment`,
+          {
+            postId,
+            text,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        usePostStore().fetchActivePost("" + postId);
+      } catch (error) {
+        console.error("An error occurred while creating the comment:", error);
       }
     },
   },

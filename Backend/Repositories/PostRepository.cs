@@ -21,7 +21,13 @@ namespace Backend.Repositories
 
         public Post GetPost(int id)
         {
-            return _context.Posts.Where(p => p.Id == id).Include("Comments").Include("Votes").Include("Author").FirstOrDefault();
+            return _context.Posts
+                .Where(p => p.Id == id)
+                .Include(p => p.Comments)
+                    .ThenInclude(c => c.Author)
+                .Include(p => p.Votes)
+                .Include(p => p.Author)
+                .FirstOrDefault();
         }
 
         public ICollection<Post> SearchForPosts(string query)
