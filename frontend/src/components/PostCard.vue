@@ -1,7 +1,7 @@
 <script lang="ts">
-import { Vote, usePostStore } from "@/stores/postStore";
-import { useUserStore } from "@/stores/userStore";
-import { defineComponent, PropType } from "vue";
+import { usePostStore } from "@/stores/postStore";
+import { defineComponent } from "vue";
+import { mapActions } from "pinia";
 
 export default defineComponent({
   name: "PostCard",
@@ -16,12 +16,8 @@ export default defineComponent({
       voteCount: 0,
     };
   },
-  computed: {
-    user() {
-      return useUserStore().user;
-    },
-  },
   methods: {
+    ...mapActions(usePostStore, ["voteOnPost", "getVoteCount"]),
     goToPost() {
       if (this.post.id) {
         this.$router.push(`/posts/${this.post.id}`);
@@ -33,12 +29,12 @@ export default defineComponent({
       }
     },
     async vote(up: boolean) {
-      await usePostStore().voteOnPost(this.post.id, up);
-      this.voteCount = await usePostStore().getVoteCount(this.post.id);
+      await this.voteOnPost(this.post.id, up);
+      this.voteCount = await this.getVoteCount(this.post.id);
     },
   },
   async created() {
-    this.voteCount = await usePostStore().getVoteCount(this.post.id);
+    this.voteCount = await this.getVoteCount(this.post.id);
   },
 });
 </script>

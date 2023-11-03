@@ -8,11 +8,25 @@ export default defineComponent({
   computed: {
     ...mapState(usePostStore, ["activePost"]),
   },
-  methods: {
-    ...mapActions(usePostStore, ["fetchActivePost"]),
+  data() {
+    return {
+      voteCount: 0,
+    };
   },
-  created() {
+  methods: {
+    ...mapActions(usePostStore, [
+      "fetchActivePost",
+      "voteOnPost",
+      "getVoteCount",
+    ]),
+    async vote(up: boolean) {
+      await this.voteOnPost(this.activePost.id, up);
+      this.voteCount = await this.getVoteCount(this.activePost.id);
+    },
+  },
+  async created() {
     this.fetchActivePost(this.$route.params.id);
+    this.voteCount = await this.getVoteCount(+this.$route.params.id);
   },
 });
 </script>
@@ -42,12 +56,18 @@ export default defineComponent({
       </div>
       <p class="text-gray-700 text-base">{{ activePost.text }}</p>
       <div class="mt-4 flex items-center space-x-4">
-        <button class="flex items-center space-x-2 text-green-500">
+        <button
+          class="flex items-center space-x-2 text-green-500"
+          @click="vote(true)"
+        >
           <i class="fas fa-thumbs-up"></i>
           <span class="text-sm">Upvote</span>
         </button>
-        <p class="text-gray-600 text-sm">{{ activePost.Votes?.length }}</p>
-        <button class="flex items-center space-x-2 text-red-500">
+        <p class="text-gray-600 text-sm">{{ voteCount }}</p>
+        <button
+          class="flex items-center space-x-2 text-red-500"
+          @click="vote(false)"
+        >
           <i class="fas fa-thumbs-down"></i>
           <span class="text-sm">Downvote</span>
         </button>
