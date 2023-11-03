@@ -33,23 +33,12 @@ export default defineComponent({
       }
     },
     async vote(up: boolean) {
-      if (this.post.id) {
-        await usePostStore().voteOnPost(this.post.id, up);
-        this.voteCount = this.calculateVoteCount();
-      }
-    },
-    calculateVoteCount() {
-      const upvotes = (this.post.votes || []).filter(
-        (vote: Vote) => vote.up
-      ).length;
-      const downvotes = (this.post.votes || []).filter(
-        (vote: Vote) => !vote.up
-      ).length;
-      return upvotes - downvotes;
+      await usePostStore().voteOnPost(this.post.id, up);
+      this.voteCount = await usePostStore().getVoteCount(this.post.id);
     },
   },
-  mounted() {
-    this.voteCount = this.calculateVoteCount();
+  async created() {
+    this.voteCount = await usePostStore().getVoteCount(this.post.id);
   },
 });
 </script>

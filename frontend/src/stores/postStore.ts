@@ -103,5 +103,14 @@ export const usePostStore = defineStore("post", {
         console.log(err);
       }
     },
+
+    async getVoteCount(postId: number) {
+      const response = await axios.get(
+        `http://localhost:5066/Post/${postId}/votes`
+      );
+      console.log(response);
+
+      return response.data;
+    },
   },
 });

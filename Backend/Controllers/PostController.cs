@@ -81,6 +81,23 @@ namespace Backend.Controllers
             return Ok(post);
         }
 
+        [HttpGet("{postId}/votes")]
+        public IActionResult GetVoteCount(int postId)
+        {
+            var post = _postRepository.GetPost(postId);
+
+            if (post == null)
+                return NotFound();
+
+            int voteCount = post.Votes.Count(vote => vote.Up) - post.Votes.Count(vote => !vote.Up);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return Ok(voteCount);
+        }
+
+
         [HttpGet("search")]
         public IActionResult GetPosts([FromQuery] string query)
         {
