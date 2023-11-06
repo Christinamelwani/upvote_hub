@@ -15,15 +15,19 @@ export const useUserStore = defineStore("user", {
     async fetchUser() {
       const token = localStorage.getItem("access_token");
       if (token) {
-        const response = await axios.get(`http://localhost:5066/user/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        try {
+          const response = await axios.get(`http://localhost:5066/user/`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        if (response.data.email) {
-          this.user = response.data;
-          this.loggedIn = true;
+          if (response.data.email) {
+            this.user = response.data;
+            this.loggedIn = true;
+          }
+        } catch (err) {
+          this.logout();
         }
       }
     },

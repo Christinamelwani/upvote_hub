@@ -1,14 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-
-interface VoteNook {
-  id: number;
-  name: string;
-  about: string;
-  creator: {
-    username: string;
-  };
-}
+import { VoteNook } from "@/stores/voteNookStore";
 
 export default defineComponent({
   name: "VoteNookCard",

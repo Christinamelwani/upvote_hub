@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { Comment } from "@/stores/commentStore";
+import Swal from "sweetalert2";
 export interface Post {
   id: number;
   title: string;
@@ -84,7 +85,7 @@ export const usePostStore = defineStore("post", {
       try {
         const token = localStorage.getItem("access_token");
         if (!token) {
-          console.log("You must be logged in to upvote this post!");
+          Swal.fire("You must be logged in to upvote this post!");
         }
 
         const response = await axios.post(
