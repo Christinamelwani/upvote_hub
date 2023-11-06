@@ -15,10 +15,12 @@ namespace Backend.Controllers
     public class VoteNookController : ControllerBase
     {
         private readonly IVoteNookRepository _voteNookRepository;
+        private readonly IUserRepository _userRepository;
 
-        public VoteNookController(IVoteNookRepository voteNookRepository)
+        public VoteNookController(IVoteNookRepository voteNookRepository, IUserRepository userRepository)
         {
             _voteNookRepository = voteNookRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -47,5 +49,33 @@ namespace Backend.Controllers
 
             return Ok(posts);
         }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult CreateVoteNook([FromBody] VoteNookDto newVoteNook)
+        {
+            // Move this to middleware soon
+            ClaimsIdentity identity = User.Identity as ClaimsIdentity;
+            var claims = identity.Claims.ToDictionary(c => c.Type, c => c.Value);
+            string userEmail = claims["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+
+            var creator = _userRepository.GetUserByEmail(userEmail);
+
+            if (_voteNookRepository.GetVoteNookByName(newVoteNook.Name) != null)
+                return StatusCode(422, "Title already taken!");
+
+            VoteNook voteNookMap = new VoteNook
+            {
+                Name = newVoteNook.Name,
+                About = newVoteNook.About,
+                Creator = creator,
+            };
+
+            if (!_voteNookRepository.CreateVoteNook(voteNookMap))
+                return StatusCode(500, "Failed to save!");
+
+            return StatusCode(201, voteNookMap);
+        }
+
     }
 }

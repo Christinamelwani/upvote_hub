@@ -35,6 +35,11 @@ namespace Backend.Repositories
             return _context.VoteNooks.Include("Creator").ToList();
         }
 
+        public VoteNook GetVoteNookByName(string name)
+        {
+            return _context.VoteNooks.Where(v => v.Name == name).FirstOrDefault();
+        }
+
         public bool Save()
         {
             return _context.SaveChanges() > 0;

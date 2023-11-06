@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import Swal from "sweetalert2";
 
 export interface VoteNook {
   id: number;
@@ -10,7 +11,13 @@ export interface VoteNook {
   };
 }
 
-export const useVoteNookStore = defineStore("post", {
+interface axiosError {
+  response: {
+    data: string;
+  };
+}
+
+export const useVoteNookStore = defineStore("voteNook", {
   state: () => ({
     voteNooks: [] as Array<VoteNook>,
     newVoteNook: {} as VoteNook,
@@ -28,18 +35,31 @@ export const useVoteNookStore = defineStore("post", {
     },
     async createVoteNook() {
       try {
-        // Send a POST request to create a new Votenook
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+          Swal.fire("You must be logged in to create a votenook!");
+        }
+
         const response = await axios.post(
           "http://localhost:5066/voteNook",
-          this.newVoteNook
+          this.newVoteNook,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
 
-        // Clear the form inputs
         this.newVoteNook.name = "";
         this.newVoteNook.about = "";
+
+        this.fetchVoteNooks();
       } catch (err) {
-        console.log(err);
-        // Handle any error or show an error message here.
+        if (err instanceof AxiosError && err.response) {
+          Swal.fire(err.response.data);
+        } else {
+          console.error("An unexpected error occurred:", err);
+        }
       }
     },
   },
