@@ -13,6 +13,9 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(usePostStore, ["fetchPostsInVoteNook"]),
+    redirectToCreatePost() {
+      this.$router.push("/posts/create");
+    },
   },
   created() {
     this.fetchPostsInVoteNook(this.$route.params.id);
@@ -20,14 +23,20 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div
-    class="w-full min-h-screen p-4 bg-[#DAE0E6] flex items-center justify-center"
-  >
+  <div class="min-h-screen flex justify-center bg-gray-200 p-4">
     <div class="w-full max-w-screen-md">
+      <button
+        @click="redirectToCreatePost"
+        class="w-full bg-white text-gray-600 rounded-lg px-4 py-2 font-medium hover:bg-gray-100 focus:outline-none"
+      >
+        Create Post
+      </button>
+    </div>
+    <div class="max-w-screen-md">
       <div
         v-for="post in posts"
         :key="post.id"
-        class="flex flex-col items-center w-full"
+        class="w-full flex flex-col items-center"
       >
         <PostCard :post="post" />
       </div>
