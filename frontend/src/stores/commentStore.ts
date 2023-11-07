@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { usePostStore } from "./postStore";
+import Swal from "sweetalert2";
 
 export interface Comment {
   id: number;
@@ -34,8 +35,13 @@ export const useCommentStore = defineStore("comment", {
     async createComment(postId: number, text: string) {
       const token = localStorage.getItem("access_token");
       if (!token) {
-        console.log("You must be logged in to comment on this post!");
-        return; // Exit early if there's no token
+        Swal.fire("You must be logged in to comment on this post!");
+        return;
+      }
+
+      if (!text) {
+        Swal.fire("Can't create empty comment!");
+        return;
       }
 
       try {

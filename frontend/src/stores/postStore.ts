@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Comment } from "@/stores/commentStore";
 import Swal from "sweetalert2";
 export interface Post {
@@ -86,6 +86,7 @@ export const usePostStore = defineStore("post", {
         const token = localStorage.getItem("access_token");
         if (!token) {
           Swal.fire("You must be logged in to upvote this post!");
+          return;
         }
 
         const response = await axios.post(
@@ -113,6 +114,35 @@ export const usePostStore = defineStore("post", {
         return response.data;
       } catch (err) {
         console.log(err);
+      }
+    },
+
+    async createPost(post: Post) {
+      try {
+        const token = localStorage.getItem("access_token");
+        if (!token) {
+          Swal.fire("You must be logged in to create a post!");
+          return;
+        }
+
+        if (!post.title || !post.text) {
+          Swal.fire("Can't create empty post!");
+          return;
+        }
+
+        const response = await axios.post("http://localhost:5066/post", post, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        this.router.push("/");
+      } catch (err) {
+        if (err instanceof AxiosError && err.response) {
+          Swal.fire(err.response.data);
+        } else {
+          console.error("An unexpected error occurred:", err);
+        }
       }
     },
   },

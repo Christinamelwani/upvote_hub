@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import axios from "axios";
 import { mapState, mapWritableState, mapActions } from "pinia";
 import VoteNookCard from "@/components/VoteNookCard.vue";
 import { useVoteNookStore } from "../stores/voteNookStore";
@@ -48,7 +47,6 @@ export default defineComponent({
           >
             {{ showDropdown ? "Cancel" : "Create New Votenook" }}
           </button>
-          <!-- Optional: Add an icon to the button -->
           <svg
             v-if="showDropdown"
             class="w-6 h-6 ml-2 cursor-pointer"

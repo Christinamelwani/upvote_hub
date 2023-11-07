@@ -13,6 +13,9 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(usePostStore, ["fetchPosts"]),
+    redirectToCreatePost() {
+      this.$router.push("/posts/create");
+    },
   },
   watch: {
     "$route.query.query": {
@@ -25,14 +28,29 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="w-full h-full min-h-screen p-4 bg-gray-900">
-    <div class="w-screen max-w-xl mx-auto space-y-4">
-      <PostCard
-        v-for="post in posts"
-        :key="post.id"
-        :post="post"
-        class="bg-white rounded shadow p-4"
-      />
+  <div
+    class="w-full min-h-screen p-4 bg-gray-900 flex items-center justify-center"
+  >
+    <div
+      class="w-full max-w-screen-xl flex flex-col mx-auto px-4 space-y-6 items-center"
+    >
+      <div class="bg-white p-4 rounded-lg shadow-md">
+        <button
+          @click="redirectToCreatePost"
+          class="bg-blue-600 text-white rounded-lg px-4 py-2 font-medium hover:bg-blue-700 focus:outline-none"
+        >
+          Create Post
+        </button>
+      </div>
+
+      <div class="w-full max-w-screen-md">
+        <PostCard
+          v-for="post in posts"
+          :key="post.id"
+          :post="post"
+          class="bg-white rounded-lg shadow-md p-4 my-4"
+        />
+      </div>
     </div>
   </div>
 </template>

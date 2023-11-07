@@ -11,12 +11,6 @@ export interface VoteNook {
   };
 }
 
-interface axiosError {
-  response: {
-    data: string;
-  };
-}
-
 export const useVoteNookStore = defineStore("voteNook", {
   state: () => ({
     voteNooks: [] as Array<VoteNook>,
@@ -38,6 +32,7 @@ export const useVoteNookStore = defineStore("voteNook", {
         const token = localStorage.getItem("access_token");
         if (!token) {
           Swal.fire("You must be logged in to create a votenook!");
+          return;
         }
 
         const response = await axios.post(

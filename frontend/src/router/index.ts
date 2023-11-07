@@ -27,6 +27,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/PostDetailView.vue"),
   },
   {
+    path: "/posts/create",
+    name: "PostCreationPage",
+    component: () => import("../views/CreatePost.vue"),
+  },
+  {
     path: "/votenooks",
     name: "VoteNooksPage",
     component: () => import("../views/VoteNooksView.vue"),
