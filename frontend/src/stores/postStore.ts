@@ -85,7 +85,7 @@ export const usePostStore = defineStore("post", {
       try {
         const token = localStorage.getItem("access_token");
         if (!token) {
-          Swal.fire("You must be logged in to upvote this post!");
+          Swal.fire("You must be logged in to vote on this post!");
           return;
         }
 

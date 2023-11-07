@@ -31,7 +31,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-900">
+  <div class="flex items-center justify-center min-h-screen bg-[#DAE0E6]">
     <section class="bg-white w-full md:max-w-md xl:p-0 rounded-lg">
       <div class="p-6 space-y-4 sm:p-8">
         <h1 class="text-2xl font-semibold text-gray-900">{{ submitText }}</h1>

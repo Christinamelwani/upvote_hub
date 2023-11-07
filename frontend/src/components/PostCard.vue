@@ -44,50 +44,60 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-md p-4 m-4">
-    <div class="mb-4">
-      <h2
-        @click="goToPost"
-        class="text-2xl cursor-pointer font-semibold text-gray-800 mb-2"
-      >
-        {{ post.title }}
-      </h2>
-      <img
-        @click="goToPost"
-        class="w-full cursor-pointer h-auto rounded-md"
-        :src="post.imageUrl"
-        alt="Post Image"
-      />
-    </div>
-    <div class="mb-2 flex flex-row justify-between items-center text-blue-500">
-      <a :href="post.link" class="hover:underline break-all">{{ post.link }}</a>
-      <p @click="goToAuthor" class="text-sm font-semibold cursor-pointer">
-        {{ post.author.username }}
-      </p>
-      <i
-        @click="removePost(post.id)"
-        v-if="post.author.username === user.username"
-        class="fas fa-trash-alt text-red-500 cursor-pointer"
-        >Remove Post</i
-      >
-    </div>
-    <p class="text-gray-700 text-sm line-clamp-3">{{ post.text }}</p>
-    <div class="mt-4 flex items-center justify-between w-[50%]">
-      <button
+  <div class="bg-white w-[50vw] flex flex-row rounded-lg shadow-md m-4">
+    <div
+      class="flex bg-gray-100 flex-col items-center py-4 px-2 rounded-lg space-y-2"
+    >
+      <svg
         @click="vote(true)"
-        class="flex items-center space-x-2 text-green-500"
+        class="rotate-180 w-8 cursor-pointer"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 384 512"
       >
-        <i class="fas fa-thumbs-up"></i>
-        <span>Upvote</span>
-      </button>
+        <path
+          d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+        />
+      </svg>
       <p class="text-gray-600">{{ voteCount }}</p>
-      <button
+      <svg
         @click="vote(false)"
-        class="flex items-center space-x-2 text-red-500 ml-4"
+        class="w-8 cursor-pointer"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 384 512"
       >
-        <i class="fas fa-thumbs-down"></i>
-        <span>Downvote</span>
-      </button>
+        <path
+          d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+        />
+      </svg>
+    </div>
+    <div class="mx-4 w-full py-4">
+      <div class="mb-4 cursor-pointer" @click="goToPost">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">
+          {{ post.title }}
+        </h2>
+        <img
+          :src="post.imageUrl"
+          alt="Post Image"
+          class="w-full h-auto rounded-md"
+        />
+      </div>
+      <div
+        class="mb-2 flex flex-row justify-between items-center text-blue-500"
+      >
+        <a :href="post.link" class="hover:underline break-all">{{
+          post.link
+        }}</a>
+        <p @click="goToAuthor" class="text-sm font-semibold cursor-pointer">
+          {{ post.author.username }}
+        </p>
+        <i
+          v-if="post.author.username === user.username"
+          @click="removePost(post.id)"
+          class="fas fa-trash-alt text-red-500 cursor-pointer"
+          >Remove Post</i
+        >
+      </div>
+      <p class="text-gray-700 text-sm line-clamp-3">{{ post.text }}</p>
     </div>
   </div>
 </template>

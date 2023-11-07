@@ -31,7 +31,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="w-full h-full min-h-screen bg-gray-900">
+  <div class="w-full h-full min-h-screen bg-[#DAE0E6]">
     <div
       class="bg-white rounded flex flex-row justify-center gap-10 shadow p-4"
     >
@@ -68,12 +68,15 @@ export default defineComponent({
     </div>
     <div class="w-screen max-w-xl mx-auto space-y-4">
       <div v-if="activeTab === 'posts'">
-        <PostCard
-          v-for="post in posts"
-          :key="post.id"
-          :post="post"
-          class="bg-white rounded shadow p-4"
-        />
+        <div class="w-full max-w-screen-md">
+          <div
+            v-for="post in posts"
+            :key="post.id"
+            class="flex flex-col items-center w-full"
+          >
+            <PostCard :post="post" />
+          </div>
+        </div>
       </div>
       <div v-else-if="activeTab === 'comments'">
         <CommentCard

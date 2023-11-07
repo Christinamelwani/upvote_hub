@@ -20,14 +20,17 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="w-full h-full min-h-screen p-4 bg-gray-900">
-    <div class="w-screen max-w-xl mx-auto space-y-4">
-      <PostCard
+  <div
+    class="w-full min-h-screen p-4 bg-[#DAE0E6] flex items-center justify-center"
+  >
+    <div class="w-full max-w-screen-md">
+      <div
         v-for="post in posts"
         :key="post.id"
-        :post="post"
-        class="bg-white rounded shadow p-4"
-      />
+        class="flex flex-col items-center w-full"
+      >
+        <PostCard :post="post" />
+      </div>
     </div>
   </div>
 </template>

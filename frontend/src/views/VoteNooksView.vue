@@ -29,7 +29,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="w-full h-full min-h-screen p-4 bg-gray-900">
+  <div class="w-full h-full min-h-screen p-4 bg-[#DAE0E6]">
     <div class="w-screen max-w-xl mx-auto space-y-4">
       <VoteNookCard
         v-for="voteNook in voteNooks"

@@ -29,25 +29,28 @@ export default defineComponent({
 </script>
 <template>
   <div
-    class="w-full min-h-screen p-4 bg-gray-900 flex items-center justify-center"
+    class="w-full min-h-screen p-4 bg-[#DAE0E6] flex items-center justify-center"
   >
     <div
       class="w-full max-w-screen-xl flex flex-col mx-auto px-4 space-y-6 items-center"
     >
-      <button
-        @click="redirectToCreatePost"
-        class="bg-blue-600 self-end text-white rounded-lg px-4 py-2 font-medium hover:bg-blue-700 focus:outline-none"
-      >
-        Create Post
-      </button>
+      <div class="flex justify-end">
+        <button
+          @click="redirectToCreatePost"
+          class="bg-blue-600 text-white rounded-lg px-4 py-2 font-medium hover:bg-blue-700 focus:outline-none"
+        >
+          Create Post
+        </button>
+      </div>
 
       <div class="w-full max-w-screen-md">
-        <PostCard
+        <div
           v-for="post in posts"
           :key="post.id"
-          :post="post"
-          class="bg-white rounded-lg shadow-md p-4 my-4"
-        />
+          class="flex flex-col items-center w-full"
+        >
+          <PostCard :post="post" />
+        </div>
       </div>
     </div>
   </div>
