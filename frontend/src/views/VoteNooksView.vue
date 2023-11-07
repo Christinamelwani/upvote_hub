@@ -43,7 +43,7 @@ export default defineComponent({
         <div class="mb-4 flex items-center">
           <button
             @click="toggleDropdown"
-            class="px-4 py-2 bg-blue-500 text-white rounded-md"
+            class="px-4 py-2 w-full bg-white text-gray-900 rounded-md"
           >
             {{ showDropdown ? "Cancel" : "Create New Votenook" }}
           </button>

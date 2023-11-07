@@ -34,10 +34,10 @@ export default defineComponent({
     <div
       class="w-full max-w-screen-xl flex flex-col mx-auto px-4 space-y-6 items-center"
     >
-      <div class="flex justify-end">
+      <div class="w-full max-w-screen-md">
         <button
           @click="redirectToCreatePost"
-          class="bg-blue-600 text-white rounded-lg px-4 py-2 font-medium hover:bg-blue-700 focus:outline-none"
+          class="bg-white h-full w-full text-gray-600 rounded-lg px-4 py-2 font-medium hover:bg-gray-100 focus:outline-none"
         >
           Create Post
         </button>
