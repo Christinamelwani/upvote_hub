@@ -84,9 +84,9 @@ export default defineComponent({
       <div
         class="mb-2 flex flex-row justify-between items-center text-blue-500"
       >
-        <a :href="post.link" class="hover:underline break-all">{{
-          post.link
-        }}</a>
+        <a :href="post.link" class="hover:underline max-w-[50%] break-all"
+          >Link</a
+        >
         <p @click="goToAuthor" class="text-sm font-semibold cursor-pointer">
           {{ post.author.username }}
         </p>

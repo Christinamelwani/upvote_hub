@@ -64,9 +64,9 @@ export default defineComponent({
         />
       </div>
       <div class="mb-4 flex justify-between items-center text-blue-500">
-        <a :href="activePost.link" class="hover:underline break-all text-sm">{{
-          activePost.link
-        }}</a>
+        <a :href="activePost.link" class="hover:underline break-all text-sm">
+          Link</a
+        >
         <p
           @click="$router.push(`/users/${activePost.author?.id}`)"
           class="text-sm font-semibold cursor-pointer"

@@ -23,7 +23,7 @@ export default defineComponent({
 });
 </script>
 <template>
-  <div class="min-h-screen flex justify-center bg-gray-200 p-4">
+  <div class="min-h-screen flex flex-col items-center bg-gray-200 p-4">
     <div class="w-full max-w-screen-md">
       <button
         @click="redirectToCreatePost"
