@@ -1,7 +1,8 @@
 <script lang="ts">
 import { usePostStore } from "@/stores/postStore";
 import { defineComponent } from "vue";
-import { mapActions } from "pinia";
+import { mapState, mapActions } from "pinia";
+import { useUserStore } from "@/stores/userStore";
 
 export default defineComponent({
   name: "PostCard",
@@ -16,8 +17,11 @@ export default defineComponent({
       voteCount: 0,
     };
   },
+  computed: {
+    ...mapState(useUserStore, ["user"]),
+  },
   methods: {
-    ...mapActions(usePostStore, ["voteOnPost", "getVoteCount"]),
+    ...mapActions(usePostStore, ["voteOnPost", "getVoteCount", "removePost"]),
     goToPost() {
       if (this.post.id) {
         this.$router.push(`/posts/${this.post.id}`);
@@ -60,6 +64,12 @@ export default defineComponent({
       <p @click="goToAuthor" class="text-sm font-semibold cursor-pointer">
         {{ post.author.username }}
       </p>
+      <i
+        @click="removePost(post.id)"
+        v-if="post.author.username === user.username"
+        class="fas fa-trash-alt text-red-500 cursor-pointer"
+        >Remove Post</i
+      >
     </div>
     <p class="text-gray-700 text-sm line-clamp-3">{{ post.text }}</p>
     <div class="mt-4 flex items-center justify-between w-[50%]">

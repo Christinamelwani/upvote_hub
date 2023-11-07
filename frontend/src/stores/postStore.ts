@@ -106,6 +106,17 @@ export const usePostStore = defineStore("post", {
       }
     },
 
+    async removePost(postId: number) {
+      try {
+        const response = await axios.delete(
+          `http://localhost:5066/post/${postId}`
+        );
+        this.fetchPosts("");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async getVoteCount(postId: number) {
       try {
         const response = await axios.get(

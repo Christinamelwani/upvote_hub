@@ -34,14 +34,12 @@ export default defineComponent({
     <div
       class="w-full max-w-screen-xl flex flex-col mx-auto px-4 space-y-6 items-center"
     >
-      <div class="bg-white p-4 rounded-lg shadow-md">
-        <button
-          @click="redirectToCreatePost"
-          class="bg-blue-600 text-white rounded-lg px-4 py-2 font-medium hover:bg-blue-700 focus:outline-none"
-        >
-          Create Post
-        </button>
-      </div>
+      <button
+        @click="redirectToCreatePost"
+        class="bg-blue-600 self-end text-white rounded-lg px-4 py-2 font-medium hover:bg-blue-700 focus:outline-none"
+      >
+        Create Post
+      </button>
 
       <div class="w-full max-w-screen-md">
         <PostCard

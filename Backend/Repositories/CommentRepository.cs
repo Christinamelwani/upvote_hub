@@ -25,6 +25,11 @@ namespace Backend.Repositories
             _context.Add(comment);
             return Save();
         }
+        public bool DeleteComment(Comment comment)
+        {
+            _context.Remove(comment);
+            return Save();
+        }
 
         public bool Save()
         {

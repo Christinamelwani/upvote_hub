@@ -46,6 +46,12 @@ namespace Backend.Repositories
             return Save();
         }
 
+        public bool DeletePost(Post post)
+        {
+            _context.Remove(post);
+            return Save();
+        }
+
         public bool Save()
         {
             return _context.SaveChanges() > 0;

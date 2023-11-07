@@ -7,6 +7,7 @@ namespace Backend.Interfaces
         ICollection<Comment> GetComments();
         Comment GetComment(int id);
         bool CreateComment(Comment comment);
+        bool DeleteComment(Comment comment);
         bool Save();
     }
 }

@@ -17,12 +17,16 @@ namespace Backend.Controllers
         private readonly IPostRepository _postRepository;
         private readonly IVoteNookRepository _voteNookRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IVoteRepository _voteRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public PostController(IPostRepository postRepository, IUserRepository userRepository, IVoteNookRepository voteNookRepository)
+        public PostController(IPostRepository postRepository, IUserRepository userRepository, IVoteNookRepository voteNookRepository, IVoteRepository voteRepository, ICommentRepository commentRepository)
         {
             _voteNookRepository = voteNookRepository;
             _postRepository = postRepository;
             _userRepository = userRepository;
+            _voteRepository = voteRepository;
+            _commentRepository = commentRepository;
         }
 
         [Authorize]
@@ -97,6 +101,33 @@ namespace Backend.Controllers
             return Ok(voteCount);
         }
 
+
+        [HttpDelete("{postId}")]
+        public IActionResult DeletePost(int postId)
+        {
+            var post = _postRepository.GetPost(postId);
+
+            if (post == null)
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            foreach (var vote in post.Votes)
+            {
+                _voteRepository.DeleteVote(vote);
+            }
+
+            foreach (var comment in post.Comments)
+            {
+                _commentRepository.DeleteComment(comment);
+            }
+
+            if (!_postRepository.DeletePost(post))
+                return StatusCode(500, "Failed to save");
+
+            return Ok("Successfully deleted");
+        }
 
         [HttpGet("search")]
         public IActionResult GetPosts([FromQuery] string query)
