@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import UserForm from '../../components/UserForm.svelte';
+	import swal from 'sweetalert2';
 
 	async function login(email: string, password: string) {
 		try {
@@ -9,32 +10,30 @@
 			}
 
 			const response = await fetch('http://localhost:5066/user/login', {
-				method: 'POST', // Specify the HTTP method, assuming it's a login request
+				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json' // Specify the content type of the request body
+					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({
-					email,
-					password
-				})
+				body: JSON.stringify({ email, password })
 			});
 
-			let apiResponse = await response.json();
-
 			if (response.ok) {
-				const { token } = apiResponse;
+				const { token } = await response.json();
 				localStorage.setItem('access_token', token);
-
-				console.log('Successfully logged in!');
-
+				swal.fire('Successfully logged in!');
 				goto('/');
+			} else {
+				const errorText = await response.text();
+				throw new Error(errorText);
 			}
 		} catch (error: any) {
-			if (error.response) {
-				console.log(error.response.data);
-			} else {
-				console.log(error.message);
-			}
+			const errorMessage =
+				error.response?.data || error.message || 'An unexpected error occurred during login.';
+			swal.fire({
+				icon: 'error',
+				title: 'Login Error',
+				text: errorMessage
+			});
 		}
 	}
 </script>
