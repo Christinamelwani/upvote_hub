@@ -35,7 +35,7 @@ builder.Services.AddCors(
             "corsapp",
             builder =>
             {
-                builder.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader();
+                builder.WithOrigins("http://localhost:8080", "http://localhost:5173").AllowAnyMethod().AllowAnyHeader();
             }
         )
 );
